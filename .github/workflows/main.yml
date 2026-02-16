@@ -1,12 +1,30 @@
-name: TDS Assignment
+name: Caching Assignment
 
-# This triggers the action whenever you push code
 on: [push]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
-      # THE IMPORTANT PART: The name must contain your specific email
-      - name: 24f2000323@ds.study.iitm.ac.in
-        run: echo "Hello, world!"
+      - uses: actions/checkout@v4
+
+      # 1. Create a dummy file to cache (since your repo is empty)
+      # This ensures the cache actually has something to save!
+      - name: Create dummy dependencies
+        run: |
+          mkdir -p my-dependencies
+          echo "simulation data" > my-dependencies/data.txt
+
+      # 2. The Required Cache Step
+      - name: Restore Cache
+        id: cache-step-id
+        uses: actions/cache@v4
+        with:
+          path: my-dependencies
+          # STRICT REQUIREMENT from your screenshot
+          key: cache-7040db6
+
+      # 3. The Required Verification Step
+      # STRICT REQUIREMENT: Name must be exactly 'prime-cache-7040db6'
+      - name: prime-cache-7040db6
+        run: echo "Cache hit status ${{ steps.cache-step-id.outputs.cache-hit }}"
