@@ -1,11 +1,37 @@
-name: Assignment 1 - Email
+name: All Assignments Combined
 
 on: [push]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
-      # REQUIRED: Step name with your email
+      - uses: actions/checkout@v4
+
+      # ---------------------------------------------------
+      # REQUIREMENT 1: The Email Step
+      # ---------------------------------------------------
       - name: 24f2000323@ds.study.iitm.ac.in
-        run: echo "Hello, world!"
+        run: echo "Email requirement satisfied"
+
+      # ---------------------------------------------------
+      # REQUIREMENT 2: The Cache Steps
+      # ---------------------------------------------------
+      
+      # 1. Create dummy data so we have something to cache
+      - name: Create dummy dependencies
+        run: |
+          mkdir -p my-dependencies
+          echo "simulation data" > my-dependencies/data.txt
+
+      # 2. The Cache Step (Specific Key)
+      - name: Restore Cache
+        id: cache-step-id
+        uses: actions/cache@v4
+        with:
+          path: my-dependencies
+          key: cache-7040db6
+
+      # 3. The Verification Step (Specific Name)
+      - name: prime-cache-7040db6
+        run: echo "Cache hit status ${{ steps.cache-step-id.outputs.cache-hit }}"
