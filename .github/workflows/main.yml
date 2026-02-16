@@ -1,0 +1,12 @@
+name: TDS Assignment
+
+# This triggers the action whenever you push code
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      # THE IMPORTANT PART: The name must contain your specific email
+      - name: 24f2000323@ds.study.iitm.ac.in
+        run: echo "Hello, world!"
