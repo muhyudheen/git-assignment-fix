@@ -1,4 +1,4 @@
-name: Caching Assignment
+name: Assignment 2 - Caching
 
 on: [push]
 
@@ -8,23 +8,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # 1. Create a dummy file to cache (since your repo is empty)
-      # This ensures the cache actually has something to save!
+      # Create a dummy file so we have something to cache
       - name: Create dummy dependencies
         run: |
           mkdir -p my-dependencies
           echo "simulation data" > my-dependencies/data.txt
 
-      # 2. The Required Cache Step
+      # REQUIRED: Cache step with specific KEY
       - name: Restore Cache
         id: cache-step-id
         uses: actions/cache@v4
         with:
           path: my-dependencies
-          # STRICT REQUIREMENT from your screenshot
           key: cache-7040db6
 
-      # 3. The Required Verification Step
-      # STRICT REQUIREMENT: Name must be exactly 'prime-cache-7040db6'
+      # REQUIRED: Step name 'prime-cache-...'
       - name: prime-cache-7040db6
         run: echo "Cache hit status ${{ steps.cache-step-id.outputs.cache-hit }}"
